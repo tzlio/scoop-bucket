@@ -20,32 +20,32 @@
   "extract_dir": "{code_GetDestDir}",
   "pre_install": [
     "Remove-Item \"$dir\\`$*\", \"$dir\\Uninst*\" -Recurse",
-    "Rename-Item -Path \"$dir\\{code_GetExeBasename}\" -NewName 'Windsurf.exe'",
-    "Rename-Item -Path \"$dir\\{code_GetVisualElementsManifest}\" -NewName 'VisualElementsManifest.xml'",
-    "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationCmdFilename}\" -NewName 'windsurf.cmd'",
-    "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationFilename}\" -NewName 'windsurf'"
+    "Rename-Item -Path \"$dir\\{code_GetExeBasename}\" -NewName 'Devin.exe'",
+    "Rename-Item -Path \"$dir\\{code_GetVisualElementsManifest}\" -NewName 'Devin.VisualElementsManifest.xml'",
+    "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationCmdFilename}\" -NewName 'devin-desktop.cmd'",
+    "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationFilename}\" -NewName 'devin-desktop'",
+    "if (Test-Path \"$dir\\resources\\app\\product,2.json\") {",
+    "    Move-Item \"$dir\\resources\\app\\product,2.json\" \"$dir\\resources\\app\\product.json\" -Force",
+    "} elseif (Test-Path \"$dir\\resources\\app\\product,1.json\") {",
+    "    Move-Item \"$dir\\resources\\app\\product,1.json\" \"$dir\\resources\\app\\product.json\" -Force",
+    "} elseif (!(Test-Path \"$dir\\resources\\app\\product.json\")) {",
+    "    throw 'Devin product configuration was not found in the installer.'",
+    "}"
   ],
   "post_install": [
-    "if (!(Test-Path \"$dir\\data\\extensions\") -and (Test-Path \"$env:USERPROFILE\\.windsurf\\extensions\")) {",
-    "    info '[Portable Mode] Copying extensions...'",
-    "    Copy-Item \"$env:USERPROFILE\\.windsurf\\extensions\" \"$dir\\data\" -Recurse",
-    "}",
-    "if (!(Test-Path \"$dir\\data\\user-data\") -and (Test-Path \"$env:AppData\\Windsurf\")) {",
-    "    info '[Portable Mode] Copying user data...'",
-    "    Copy-Item \"$env:AppData\\Windsurf\" \"$dir\\data\\user-data\" -Recurse",
-    "}",
     "$extensions_file = \"$dir\\data\\extensions\\extensions.json\"",
     "if ((Test-Path \"$extensions_file\")) {",
     "    info 'Adjusting path in extensions file...'",
-    "    (Get-Content \"$extensions_file\") -replace '(?<=windsurf(/|\\\\\\\\)).*?(?=(/|\\\\\\\\)data(/|\\\\\\\\)extensions)', $version | Set-Content \"$extensions_file\"",
+    "    $extensions = [System.IO.File]::ReadAllText($extensions_file, [System.Text.Encoding]::UTF8)",
+    "    $updated_extensions = $extensions -replace '(?<=devin-desktop(/|\\\\\\\\)).*?(?=(/|\\\\\\\\)data(/|\\\\\\\\)extensions)', $version",
+    "    if ($updated_extensions -cne $extensions) { [System.IO.File]::WriteAllText($extensions_file, $updated_extensions, [System.Text.UTF8Encoding]::new($false)) }",
     "}"
   ],
-  "bin": "bin\\windsurf.cmd",
+  "bin": "bin\\devin-desktop.cmd",
   "shortcuts": [
     [
-      "Windsurf.exe",
-      "Windsurf",
-      "--user-data-dir=\"$dir\\data\\user-data\" --extensions-dir=\"$dir\\data\\extensions\""
+      "Devin.exe",
+      "Devin"
     ]
   ],
   "persist": "data",
