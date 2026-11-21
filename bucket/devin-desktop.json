@@ -1,66 +1,66 @@
 {
-  "version": "3.14.30825",
-  "description": "Manage fleets of local and cloud agents from one surface.",
-  "homepage": "https://devin.ai/desktop",
-  "license": {
-    "identifier": "Proprietary",
-    "url": "https://cognition.com/legal/platform-terms-of-service"
-  },
-  "innosetup": true,
-  "architecture": {
-    "64bit": {
-      "url": "https://windsurf-stable.codeiumdata.com/win32-x64-user/stable/7954ab9c3b5442a88c3fbb3734f00609d126382a/DevinUserSetup-x64-3.14.30825.exe",
-      "hash": "cc6703d88a232319c1b76f3b1d1178f2125190f4c44a828091ef0f9f12ec18e4"
+    "version": "3.14.30833",
+    "description": "Manage fleets of local and cloud agents from one surface.",
+    "homepage": "https://devin.ai/desktop",
+    "license": {
+        "identifier": "Proprietary",
+        "url": "https://cognition.com/legal/platform-terms-of-service"
     },
-    "arm64": {
-      "url": "https://windsurf-stable.codeiumdata.com/win32-arm64-user/stable/7954ab9c3b5442a88c3fbb3734f00609d126382a/DevinUserSetup-arm64-3.14.30825.exe",
-      "hash": "11ef41e4de84fdfc1f1539f1a1e2c0b1fab5ccb7737f243f2a86f6c8bf173b70"
-    }
-  },
-  "extract_dir": "{code_GetDestDir}",
-  "pre_install": [
-    "Remove-Item \"$dir\\`$*\", \"$dir\\Uninst*\" -Recurse",
-    "Rename-Item -Path \"$dir\\{code_GetExeBasename}\" -NewName 'Devin.exe'",
-    "Rename-Item -Path \"$dir\\{code_GetVisualElementsManifest}\" -NewName 'Devin.VisualElementsManifest.xml'",
-    "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationCmdFilename}\" -NewName 'devin-desktop.cmd'",
-    "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationFilename}\" -NewName 'devin-desktop'",
-    "if (Test-Path \"$dir\\resources\\app\\product,2.json\") {",
-    "    Move-Item \"$dir\\resources\\app\\product,2.json\" \"$dir\\resources\\app\\product.json\" -Force",
-    "} elseif (Test-Path \"$dir\\resources\\app\\product,1.json\") {",
-    "    Move-Item \"$dir\\resources\\app\\product,1.json\" \"$dir\\resources\\app\\product.json\" -Force",
-    "} elseif (!(Test-Path \"$dir\\resources\\app\\product.json\")) {",
-    "    throw 'Devin product configuration was not found in the installer.'",
-    "}"
-  ],
-  "post_install": [
-    "$extensions_file = \"$dir\\data\\extensions\\extensions.json\"",
-    "if ((Test-Path \"$extensions_file\")) {",
-    "    info 'Adjusting path in extensions file...'",
-    "    $extensions = [System.IO.File]::ReadAllText($extensions_file, [System.Text.Encoding]::UTF8)",
-    "    $updated_extensions = $extensions -replace '(?<=devin-desktop(/|\\\\\\\\)).*?(?=(/|\\\\\\\\)data(/|\\\\\\\\)extensions)', $version",
-    "    if ($updated_extensions -cne $extensions) { [System.IO.File]::WriteAllText($extensions_file, $updated_extensions, [System.Text.UTF8Encoding]::new($false)) }",
-    "}"
-  ],
-  "bin": "bin\\devin-desktop.cmd",
-  "shortcuts": [
-    [
-      "Devin.exe",
-      "Devin"
-    ]
-  ],
-  "persist": "data",
-  "checkver": {
-    "url": "https://docs.devin.ai/desktop/changelog",
-    "regex": "win32-x64-user/stable/(?<Code>[\\w]+)/DevinUserSetup-x64-(?<version>[\\d.]+)\\.exe"
-  },
-  "autoupdate": {
+    "innosetup": true,
     "architecture": {
-      "64bit": {
-        "url": "https://windsurf-stable.codeiumdata.com/win32-x64-user/stable/$matchCode/DevinUserSetup-x64-$version.exe"
-      },
-      "arm64": {
-        "url": "https://windsurf-stable.codeiumdata.com/win32-arm64-user/stable/$matchCode/DevinUserSetup-arm64-$version.exe"
-      }
+        "64bit": {
+            "url": "https://windsurf-stable.codeiumdata.com/win32-x64-user/stable/a165b2eb0a68542b92a3c89cc68b4700e819a409/DevinUserSetup-x64-3.14.30833.exe",
+            "hash": "3120ef8c329e3dfe6cf0d7ec23c7eee11c0e7c436e4fc31ba0322387411e2c84"
+        },
+        "arm64": {
+            "url": "https://windsurf-stable.codeiumdata.com/win32-arm64-user/stable/a165b2eb0a68542b92a3c89cc68b4700e819a409/DevinUserSetup-arm64-3.14.30833.exe",
+            "hash": "d3261414454c245efd8781b6cea5d5fc3a3e6752de3edd19f76392b78b494a0d"
+        }
+    },
+    "extract_dir": "{code_GetDestDir}",
+    "pre_install": [
+        "Remove-Item \"$dir\\`$*\", \"$dir\\Uninst*\" -Recurse",
+        "Rename-Item -Path \"$dir\\{code_GetExeBasename}\" -NewName 'Devin.exe'",
+        "Rename-Item -Path \"$dir\\{code_GetVisualElementsManifest}\" -NewName 'Devin.VisualElementsManifest.xml'",
+        "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationCmdFilename}\" -NewName 'devin-desktop.cmd'",
+        "Rename-Item -Path \"$dir\\bin\\{code_GetBinDirApplicationFilename}\" -NewName 'devin-desktop'",
+        "if (Test-Path \"$dir\\resources\\app\\product,2.json\") {",
+        "    Move-Item \"$dir\\resources\\app\\product,2.json\" \"$dir\\resources\\app\\product.json\" -Force",
+        "} elseif (Test-Path \"$dir\\resources\\app\\product,1.json\") {",
+        "    Move-Item \"$dir\\resources\\app\\product,1.json\" \"$dir\\resources\\app\\product.json\" -Force",
+        "} elseif (!(Test-Path \"$dir\\resources\\app\\product.json\")) {",
+        "    throw 'Devin product configuration was not found in the installer.'",
+        "}"
+    ],
+    "post_install": [
+        "$extensions_file = \"$dir\\data\\extensions\\extensions.json\"",
+        "if ((Test-Path \"$extensions_file\")) {",
+        "    info 'Adjusting path in extensions file...'",
+        "    $extensions = [System.IO.File]::ReadAllText($extensions_file, [System.Text.Encoding]::UTF8)",
+        "    $updated_extensions = $extensions -replace '(?<=devin-desktop(/|\\\\\\\\)).*?(?=(/|\\\\\\\\)data(/|\\\\\\\\)extensions)', $version",
+        "    if ($updated_extensions -cne $extensions) { [System.IO.File]::WriteAllText($extensions_file, $updated_extensions, [System.Text.UTF8Encoding]::new($false)) }",
+        "}"
+    ],
+    "bin": "bin\\devin-desktop.cmd",
+    "shortcuts": [
+        [
+            "Devin.exe",
+            "Devin"
+        ]
+    ],
+    "persist": "data",
+    "checkver": {
+        "url": "https://docs.devin.ai/desktop/changelog",
+        "regex": "win32-x64-user/stable/(?<Code>[\\w]+)/DevinUserSetup-x64-(?<version>[\\d.]+)\\.exe"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://windsurf-stable.codeiumdata.com/win32-x64-user/stable/$matchCode/DevinUserSetup-x64-$version.exe"
+            },
+            "arm64": {
+                "url": "https://windsurf-stable.codeiumdata.com/win32-arm64-user/stable/$matchCode/DevinUserSetup-arm64-$version.exe"
+            }
+        }
     }
-  }
 }
